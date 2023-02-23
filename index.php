@@ -14,6 +14,8 @@ $router->get('/accounts', AccountController::class . '::listAction');
 $router->get('/categories', CategoryController::class . '::listAction');
 $router->get('/auth', UserController::class . '::auth');
 $router->get('/logout', UserController::class . '::logout');
+$router->get('/chart-data', ChartController::class . '::getChartData');
+$router->get('/chart-amount', ChartController::class . '::getAmountPerYear');
 $router->post('/login', UserController::class . '::login');
 $router->addNotFoundHandler(NotFoundPageController::class . '::notFound');
 
