@@ -2,7 +2,7 @@
 
 class Database
 {
-    protected $connection = null;
+    protected ?mysqli $connection = null;
 
     /**
      * @throws Exception
@@ -23,11 +23,11 @@ class Database
     /**
      * @throws Exception
      */
-    public function select($query = "" , $params = []): array
+    public function select($query = "" , $params = [], $mode = MYSQLI_NUM): array
     {
         try {
             $stmt = $this->executeStatement($query , $params);
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $result = $stmt->get_result()->fetch_all($mode);
             $stmt->close();
             return $result;
         } catch(Exception $e) {
