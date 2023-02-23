@@ -14,6 +14,6 @@ class AccountModel extends Database
             FROM accounts  
             WHERE user_id = ?
             ORDER BY id
-        ", ["i", ...$params]);
+        ", $params, PDO::FETCH_ASSOC);
     }
 }

@@ -16,8 +16,8 @@ class TransactionController extends BaseController
             try {
                 $transactionModel = new TransactionModel();
                 $intLimit = 20;
-                if (isset($queryStringParams) && $queryStringParams) {
-                    $intLimit = $queryStringParams;
+                if (isset($query['limit'])) {
+                    $intLimit = $query['limit'];
                 }
                 $params = array($userId, $userId, $userId, $intLimit);
                 $transactions = $transactionModel->getAll($params);

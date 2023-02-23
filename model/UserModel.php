@@ -14,6 +14,6 @@ class UserModel extends Database
             FROM users  
             WHERE username = ?
             AND password = ?
-        ", ["ss", ...$params]);
+        ", $params, PDO::FETCH_ASSOC);
     }
 }

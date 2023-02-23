@@ -14,6 +14,6 @@ class CategoryModel extends Database
             FROM categories  
             WHERE user_id = ?
             ORDER BY id 
-        ", ["i", ...$params]);
+        ", $params, PDO::FETCH_ASSOC);
     }
 }
