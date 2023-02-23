@@ -2,28 +2,12 @@
 
 class ChartController extends BaseController
 {
-    private array $transactions;
-    /**
-     * @var null
-     */
-    private $expenses;
-    private array $params;
     private TransactionModel $transactionModel;
-    /**
-     * @var mixed|null
-     */
+    private array $transactions;
+    private array $params;
     private mixed $year;
-    /**
-     * @var mixed|null
-     */
     private mixed $month;
-    /**
-     * @var mixed|null
-     */
     private mixed $toggle;
-    /**
-     * @var mixed|null
-     */
     private mixed $userId;
     private int $intLimit;
     private array $incomes;
@@ -43,16 +27,12 @@ class ChartController extends BaseController
         $this->userId = $query['userId'] ?? null;
         $this->intLimit = 20;
         $this->params = [];
-
-//        $this->transactions = $this->transactionModel->getSumByYearAndExpenseType($this->params);
-//        $this->expenses = $this->getExpensesByMonth();
-//        $this->incomes = $this->getIncomesByMonth();
     }
 
     /**
      * @throws Exception
      */
-    public function getChartDataByMonthArray($year, $toggle): array
+    public function getChartDataByYear($year, $toggle): array
     {
         define("MONTHS", array(
             "January", "February", "March",
@@ -86,7 +66,7 @@ class ChartController extends BaseController
     /**
      * @throws Exception
      */
-    public function getAmount($year, $toggle)
+    public function getAmount($year, $toggle): array
     {
         $this->toggle = self::TYPE_EXPENSE;
         $this->params = array(
@@ -125,7 +105,7 @@ class ChartController extends BaseController
 
         if (strtoupper($requestMethod) == 'GET') {
             try {
-                $transactions = $this->getChartDataByMonthArray($this->year, $this->toggle);
+                $transactions = $this->getChartDataByYear($this->year, $this->toggle);
                 $responseData = json_encode($transactions, JSON_PRETTY_PRINT);
             } catch (Exception $e) {
                 $strErrorDesc = $e->getMessage().'Something went wrong! Please contact support.';

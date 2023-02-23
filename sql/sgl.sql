@@ -93,3 +93,28 @@ FROM transactions
          LEFT JOIN categories c ON c.id = transactions.category_id
 WHERE transactions.user_id = 1
 GROUP BY transactions.id;
+
+SELECT
+    SUM(transactions.sum),
+    EXTRACT(month FROM transactions.create_at)
+FROM transactions
+         LEFT JOIN accounts a ON a.id = transactions.account_id
+         LEFT JOIN categories c ON c.id = transactions.category_id
+WHERE transactions.user_id = 1
+  AND a.user_id = 1
+  AND c.user_id = 1
+  AND EXTRACT(year FROM transactions.create_at) = 2023
+  AND EXTRACT(month FROM transactions.create_at) = 1
+  AND transactions.expense = 1
+LIMIT 20;
+
+CREATE VIEW amount_per_year AS SELECT
+   CAST(SUM(transactions.sum) AS DECIMAL(10, 2)) AS total
+FROM transactions
+WHERE transactions.user_id = 1
+ AND EXTRACT(year FROM transactions.create_at) = 2023
+ AND transactions.expense = 1
+group by EXTRACT(month FROM transactions.create_at)
+LIMIT 20;
+
+SELECT MAX(total) from amount_per_year;
